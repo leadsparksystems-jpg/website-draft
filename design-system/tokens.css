@@ -1,0 +1,216 @@
+/* =============================================================================
+   LEADSPARK — DESIGN TOKENS
+   Source of truth: Figma "leadspark-project"
+   (file y9g1mGTTKJfEsvTowGqRIS · page "Home Page - Actual Design")
+
+   These are the raw, named values pulled from the Figma variable collections
+   (Colours, Text Sizing, main-grid, hero_content-wrap, fill_bento-wrap-small,
+   text-wrap, button-wrap, logo-banner-wrap). Names mirror Figma so an AI or a
+   developer can map Figma variable -> CSS token 1:1.
+
+   Breakpoint model (Webflow defaults — confirmed):
+     Desktop  : base            (>= 992px)
+     iPad     : max-width 991px
+     Phone    : max-width 767px
+   Desktop-first cascade: :root holds desktop values, media queries override
+   downward, exactly like Figma's Desktop / iPad / Phone modes.
+
+   NOTE on values marked [assumed]: the Figma file only exposes Desktop and
+   Phone modes on some collections. Where an iPad or Phone value was not present
+   in the file it is interpolated and flagged — verify against Figma before
+   treating as final.
+============================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------------
+     COLOURS  (Figma collection: "Colours")
+  --------------------------------------------------------------------------- */
+  --color-page-bg:       #d9d2ca; /* "Cream Card" — outer page background      */
+  --color-surface:       #e5ded7; /* "Primary Background White" — bento/card   */
+  --color-ink:           #273730; /* "Dark Green" / "Dark Text" — text+borders */
+  --color-ember:         #e8a075; /* "Soft Ember" — primary CTA button fill    */
+  --color-ember-strong:  #d8602f; /* "Brand Ember" — strong accent             */
+  --color-green:         #40775f; /* "Brand Green" — green bento fill          */
+  --color-paragraph:     rgba(20, 41, 26, 0.8);  /* "Paragraph" #14291acc      */
+  --color-muted:         rgba(20, 41, 26, 0.6);  /* "Color" (sub-head) #14291a99 */
+
+  /* Foreground pairings */
+  --color-on-ember:  var(--color-ink);  /* CTA label sits on Soft Ember        */
+  --color-on-green:  #ffffff;           /* "secondary-heading | white" on green */
+  --color-on-surface: var(--color-ink);
+
+  /* ---------------------------------------------------------------------------
+     TYPOGRAPHY — FAMILIES
+  --------------------------------------------------------------------------- */
+  --font-heading: "Bricolage Grotesque", sans-serif; /* all headings + button  */
+  --font-body:    "DM Mono", monospace;              /* paragraphs / body copy */
+
+  /* Bricolage is a variable font — lock optical size + width to match Figma. */
+  --font-heading-variation: "opsz" 14, "wdth" 100;
+
+  /* Weights actually used in the design */
+  --weight-hero:      700; /* Bricolage Bold     — Hero Heading   */
+  --weight-section:   600; /* Bricolage SemiBold — Section Heading */
+  --weight-secondary: 500; /* Bricolage Medium   — Secondary/Sub   */
+  --weight-card:      500; /* Bricolage Medium   — Card Heading    */
+  --weight-button:    500; /* Bricolage Medium   — CTA label       */
+  --weight-label:     400; /* Bricolage Regular  — small labels    */
+  --weight-body:      400; /* DM Mono Regular    — paragraph       */
+
+  /* ---------------------------------------------------------------------------
+     TYPOGRAPHY — SIZES  (Figma collection: "Text Sizing")
+
+     Desktop = fixed px. iPad / Phone = fluid vw (per design notes; the phone
+     px in the variable collection is intentionally ignored in favour of vw).
+     clamp() bounds keep fluid type from getting too small/large — the min/max
+     are sensible defaults [tunable], the vw middle value is from the design.
+  --------------------------------------------------------------------------- */
+  --font-hero:      72px;   /* Bricolage Bold, UPPERCASE, line-height 120% */
+  --font-section:   38px;   /* Bricolage SemiBold, Capitalize, lh 110%     */
+  --font-secondary: 20px;   /* Bricolage Medium, Capitalize, lh 120%       */
+  --font-card:      24px;   /* Bricolage Medium, Capitalize                */
+  --font-body-size: 16px;   /* DM Mono Regular                             */
+
+  --lh-hero:      1.2;
+  --lh-section:   1.1;
+  --lh-secondary: 1.2;
+  --lh-card:      1.2;
+  --lh-body:      1.5;
+
+  --tracking-button: 0.12em; /* ≈1.92px @16px desktop / 1.32px @11px mobile */
+
+  /* ---------------------------------------------------------------------------
+     LAYOUT — GRID  (Figma collection: "main-grid")
+     Desktop 12x2 · iPad 8x6 · Phone 6x6, all repeat(n, minmax(0, 1fr)).
+  --------------------------------------------------------------------------- */
+  --content-max-width: 1300px;
+
+  --grid-columns: 12;
+  --grid-rows: 2;
+  --grid-gap: 8px;      /* "main-grid: gap/hz + vt gaps"              */
+  --grid-pad-x: 8px;    /* "main-grid: Padding/side padding (L+R)"    */
+  --grid-pad-y: 4px;    /* "main-grid: Padding/horizontal (top+bot)"  */
+
+  --bento-radius: 8px;
+
+  /* Section heights */
+  --hero-max-height: 86vh;   /* hero-section cap, desktop only          */
+  --section-max-height: 100vh; /* universal-section cap, desktop only   */
+
+  /* ---------------------------------------------------------------------------
+     SPACING — CONTENT WRAPS
+     (collections: hero_content-wrap, fill_bento-wrap-small, text-wrap,
+      logo-banner-wrap, button-wrap)
+  --------------------------------------------------------------------------- */
+  /* hero_content-wrap */
+  --hero-wrap-gap: 96px;
+  --hero-wrap-pad-x: 32px;
+  --hero-wrap-pad-y: 32px;
+
+  /* fill_bento-wrap-small (reused across most small fill bentos) */
+  --fill-wrap-gap: 16px;
+  --fill-wrap-pad-x: 16px;
+  --fill-wrap-pad-y: 16px;
+
+  /* text-wrap (all) */
+  --text-wrap-gap: 16px;
+  --text-wrap-pad-x: 8px;
+  --text-wrap-pad-top: 8px;
+  --text-wrap-pad-bottom: 48px;
+
+  /* logo-banner-wrap (LEADSPARK vertical banner) */
+  --logo-wrap-pad-x: 8px;
+  --logo-wrap-pad-y: 32px;
+
+  /* button-wrap */
+  --button-wrap-pad-x: 8px;
+  --button-wrap-pad-y: 8px;
+
+  /* ---------------------------------------------------------------------------
+     COMPONENT — CTA BUTTON ("cta-button", pill)
+  --------------------------------------------------------------------------- */
+  --btn-radius: 200px;
+  --btn-fill: var(--color-ember);
+  --btn-label-color: var(--color-on-ember);
+  --btn-pad-left: 32px;   /* desktop */
+  --btn-pad-right: 6px;
+  --btn-pad-y: 6px;
+  --btn-gap: 16px;
+  --btn-label-size: 16px;
+
+  --shadow-button: 0px 2px 3px rgba(0, 0, 0, 0.2);
+  --shadow-button-arrow-inset: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* =============================================================================
+   iPad  (max-width: 991px)  — Figma "iPad" mode
+============================================================================= */
+@media (max-width: 991px) {
+  :root {
+    /* Type: fluid vw with tunable clamp bounds */
+    --font-hero:      clamp(40px, 6vw, 64px);   /* 6vw  · lh 120% */
+    --font-section:   clamp(28px, 3.6vw, 44px); /* 3.6vw · lh 110% */
+    --font-secondary: clamp(15px, 2vw, 22px);   /* 2vw  · lh 120% */
+    --font-card:      clamp(18px, 2vw, 26px);   /* 2vw  [assumed]  */
+    --font-body-size: clamp(13px, 2vw, 18px);   /* 2vw            */
+
+    /* Grid: 8 columns x 6 rows */
+    --grid-columns: 8;
+    --grid-rows: 6;
+
+    /* Spacing tokens default to desktop on iPad unless overridden in Figma.
+       [verify] iPad-specific spacing was not exposed in the file. */
+  }
+}
+
+/* =============================================================================
+   Phone  (max-width: 767px)  — Figma "Phone" mode
+============================================================================= */
+@media (max-width: 767px) {
+  :root {
+    /* Type: fluid vw with tunable clamp bounds */
+    --font-hero:      clamp(28px, 8vw, 68px);   /* 8vw  · lh 120% */
+    --font-section:   clamp(24px, 6vw, 40px);   /* 6vw  · lh 110% */
+    --font-secondary: clamp(14px, 3.2vw, 22px); /* 3.2vw · lh 120% */
+    --font-card:      clamp(16px, 2.8vw, 22px); /* 2.8vw [assumed] */
+    --font-body-size: clamp(13px, 2.8vw, 18px); /* 2.8vw          */
+
+    /* Grid: 6 columns x 6 rows */
+    --grid-columns: 6;
+    --grid-rows: 6;
+    --grid-gap: 6px;
+    --grid-pad-x: 6px;
+    --grid-pad-y: 3px;
+
+    /* Section heights uncapped on mobile (content-driven) */
+    --hero-max-height: none;
+    --section-max-height: none;
+
+    /* Content wraps shrink on phone */
+    --hero-wrap-gap: 48px;
+    --hero-wrap-pad-x: 16px;
+    --hero-wrap-pad-y: 16px;
+
+    --fill-wrap-gap: 8px;
+    --fill-wrap-pad-x: 8px;
+    --fill-wrap-pad-y: 8px;
+
+    --text-wrap-gap: 8px;
+    --text-wrap-pad-x: 4px;
+    --text-wrap-pad-top: 4px;
+    --text-wrap-pad-bottom: 24px;  /* [assumed] phone value not in file */
+
+    --logo-wrap-pad-x: 4px;
+    --logo-wrap-pad-y: 16px;
+
+    --button-wrap-pad-x: 4px;
+    --button-wrap-pad-top: 24px;   /* Figma phone: "button-wrap top padding" 24 */
+
+    /* CTA button — mobile variant */
+    --btn-pad-left: 16px;
+    --btn-pad-right: 4px;
+    --btn-pad-y: 4px;
+    --btn-gap: 12px;
+    --btn-label-size: 11px;
+  }
+}
