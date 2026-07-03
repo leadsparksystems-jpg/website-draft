@@ -502,7 +502,7 @@ h1, h2, p { margin: 0; }
 ============================================================================= */
 @media (max-width: 767px) {
   .hero-section,
-  .universal-section { padding-inline: 16px; }
+  .universal-section { padding-inline: 8px; }
 
   /* ── Hero (exception — stays as 6-col grid) ───────────────────────────── */
   .hero-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
