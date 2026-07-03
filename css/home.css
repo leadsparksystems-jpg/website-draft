@@ -431,60 +431,99 @@ h1, h2, p { margin: 0; }
    Desktop layout is pixel-referenced to Figma; below it we reflow to stay
    usable, per the brief ("adjust to make it responsive").
 ============================================================================= */
+/* =============================================================================
+   RESPONSIVE — iPad  (≤991px)
+   Hero stays as a grid. All other sections switch to vertical flex wraps;
+   items that must sit side-by-side get their own 2-col sub-grid so row height
+   is driven by the tallest bento in that pair.
+============================================================================= */
 @media (max-width: 991px) {
   .hero-section,
   .universal-section { max-height: none; }
 
-  /* Hero: banner | content stacked, stat + empty below */
-  .hero-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: auto auto; }
+  /* ── Hero (exception — stays as grid) ─────────────────────────────────── */
+  .hero-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+  }
   .hero-logo    { grid-column: 1 / span 1; grid-row: 1 / span 2; }
   .hero-content { grid-column: 2 / span 7; grid-row: 1; }
   .hero-empty   { display: none; }
   .hero-stat    { grid-column: 2 / span 7; grid-row: 2; }
 
-  /* Problem cards: 2 × 2 */
-  .problem-intro   { grid-column: 1 / span 8; }
-  .problem-card--1 { grid-column: 1 / span 4; }
-  .problem-card--2 { grid-column: 5 / span 4; }
-  .problem-card--3 { grid-column: 1 / span 4; }
-  .problem-card--4 { grid-column: 5 / span 4; }
+  /* ── Problem section: vertical + 2-col pair grid ──────────────────────── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: var(--grid-gap);
+    padding: var(--grid-pad-y) var(--grid-pad-x);
+  }
+  .problem-intro   { grid-column: 1 / span 2; grid-row: 1; }
+  .problem-card--1 { grid-column: 1; grid-row: 2; }
+  .problem-card--2 { grid-column: 2; grid-row: 2; }
+  .problem-card--3 { grid-column: 1; grid-row: 3; }
+  .problem-card--4 { grid-column: 2; grid-row: 3; }
 
-  .audit-card { grid-column: 1 / span 8; }
+  /* ── Audit section: single bento, flex column ─────────────────────────── */
+  .audit-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+    padding: var(--grid-pad-y) var(--grid-pad-x);
+  }
+  .audit-card { width: 100%; height: auto; }
   .horizontal-text-wrap { grid-template-columns: 1fr; gap: 24px; }
 
-  /* Case study / flip / testimonial stack */
-  .flip-section-grid { grid-template-rows: auto auto auto; }
-  .case-study  { grid-column: 1 / span 8; grid-row: 1; }
-  .flip-grid   { grid-column: 1 / span 8; grid-row: 2; }
-  .testimonial { grid-column: 1 / span 8; grid-row: 3; }
+  /* ── Case study / flip / testimonial: flex column ─────────────────────── */
+  .flip-section-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+    padding: var(--grid-pad-y) var(--grid-pad-x);
+  }
+  .case-study,
+  .testimonial { width: 100%; height: auto; }
+
+  /* Flip grid keeps its own internal 2-card layout */
+  .flip-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    padding: 0;
+  }
+  .flip-card--dark  { grid-column: 1 / span 3; }
+  .flip-card--cream { grid-column: 4 / span 5; }
 }
 
+/* =============================================================================
+   RESPONSIVE — Phone  (≤767px)
+   Hero stays as a 6-col grid. All other sections stay as flex columns;
+   problem cards keep their 2-col pair grid. Flip cards switch to the
+   tap-to-open grow/shrink behaviour (no 3D flip).
+============================================================================= */
 @media (max-width: 767px) {
   .hero-section,
   .universal-section { padding-inline: 16px; }
 
-  /* Everything to a single 6-col track, bentos span full width */
-  .main-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  /* ── Hero (exception — stays as 6-col grid) ───────────────────────────── */
   .hero-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-
   .hero-logo    { grid-column: 1 / span 1; grid-row: 1 / span 2; }
   .hero-content { grid-column: 2 / span 5; grid-row: 1; }
   .hero-stat    { grid-column: 2 / span 5; grid-row: 2; }
 
-  .problem-intro,
-  .problem-card--1,
-  .problem-card--2,
-  .problem-card--3,
-  .problem-card--4,
-  .audit-card,
-  .case-study,
-  .testimonial,
-  .flip-grid { grid-column: 1 / span 6; }
-
   .paragraph--block { max-width: 100%; }
   .button-wrap--right { justify-content: flex-start; }
 
-  /* Flip cards: grow/shrink on tap instead of 3D flip */
+  /* ── Problem cards: 2-col pair grid still applies on phone ────────────── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  /* ── Flip cards: grow/shrink on tap instead of 3D flip ───────────────── */
   .flip-grid {
     display: flex;
     gap: 8px;
@@ -501,7 +540,7 @@ h1, h2, p { margin: 0; }
   }
 
   /* 70 / 30 split when one card is open */
-  .flip-grid:has(.flip-card.is-open) .flip-card { flex: 3; }
+  .flip-grid:has(.flip-card.is-open) .flip-card       { flex: 3; }
   .flip-grid:has(.flip-card.is-open) .flip-card.is-open { flex: 7; }
 
   /* Disable 3D perspective */
@@ -515,7 +554,7 @@ h1, h2, p { margin: 0; }
     transition: none;
   }
 
-  /* Faces stack on top of each other; opacity controls which shows */
+  /* Faces stack; opacity controls which shows */
   .flip-card__face {
     position: absolute;
     inset: 0;
