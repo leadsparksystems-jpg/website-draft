@@ -106,7 +106,6 @@ h1, h2, p { margin: 0; }
 }
 .universal-section {
   padding-block: 56px;
-  max-height: var(--section-max-height);
 }
 
 /* -----------------------------------------------------------------------------
