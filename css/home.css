@@ -125,6 +125,16 @@ h1, h2, p { margin: 0; }
 .hug-bento     { background: var(--color-surface); height: auto; align-self: start; }
 .fill-bento--green { background: var(--color-ink); }  /* "green" bento = dark green */
 
+/* All typography on green (dark-ink) bentos defaults to white for contrast */
+.fill-bento--green .section-heading,
+.fill-bento--green .secondary-heading,
+.fill-bento--green .card-heading,
+.fill-bento--green .paragraph { color: #ffffff; -webkit-font-smoothing: auto; }
+/* Preserve intentional brand colour highlights within green bentos */
+.fill-bento--green .light-brand { color: var(--color-light-brand); }
+.fill-bento--green .brand-green  { color: var(--color-green); }
+.fill-bento--green .cream        { color: var(--color-surface); }
+
 /* -----------------------------------------------------------------------------
    CONTENT WRAPS
 ----------------------------------------------------------------------------- */
@@ -398,7 +408,7 @@ h1, h2, p { margin: 0; }
 .flip-card__content-wrap > .text-wrap { flex: 1; width: 0; }
 
 .vertical-line--dark { background: var(--color-ink); }
-.paragraph--on-dark  { color: var(--color-surface); font-weight: var(--weight-body); font-style: normal; }
+.paragraph--on-dark  { color: #ffffff; font-weight: var(--weight-body); font-style: normal; -webkit-font-smoothing: auto; font-smoothing: auto; }
 
 .flip-card__stat {
   font-family: var(--font-heading);
