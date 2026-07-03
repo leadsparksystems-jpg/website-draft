@@ -337,14 +337,6 @@ h1, h2, p { margin: 0; }
 
 .case-study   { grid-column: 1 / span 8; grid-row: 1; }
 .testimonial  { grid-column: 9 / span 4; grid-row: 1 / span 2; }
-.flip-grid {
-  grid-column: 1 / span 8;
-  grid-row: 2;
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: var(--grid-gap);
-}
-
 .testimonial__inner { flex: 1; justify-content: center; }
 .testimonial__quote {
   font-family: var(--font-heading);
@@ -355,35 +347,32 @@ h1, h2, p { margin: 0; }
   color: var(--color-green);
 }
 
-/* Flip cards — grow/shrink on hover (desktop) or tap (mobile) */
-.flip-grid {
-  grid-column: 1 / span 8;
-  grid-row: 2;
-  display: flex;
-  gap: var(--grid-gap);
-  min-height: 252px;
-}
-
+/* Flip cards — 3D flip on hover (desktop) */
 .flip-card {
   border-radius: var(--bento-radius);
   background: transparent;
-  transition: flex 0.4s ease-in-out;
+  perspective: 1200px;
   overflow: hidden;
 }
-/* Default proportions match the Figma 3/8 : 5/8 split */
-.flip-card--dark  { flex: 3; }
-.flip-card--cream { flex: 5; }
-
-/* Grow hovered card to ~70%, shrink other to ~30% */
-.flip-grid:has(.flip-card:hover) .flip-card       { flex: 3; }
-.flip-grid:has(.flip-card:hover) .flip-card:hover { flex: 7; }
+.flip-card--dark  { grid-column: 1 / span 3; }
+.flip-card--cream { grid-column: 4 / span 5; }
 
 .flip-card__inner {
   position: relative;
   width: 100%;
   height: 100%;
   min-height: 252px;
+  transition: transform 0.6s ease-in-out;
+  transform-style: preserve-3d;
 }
+
+/* Y-axis flip (dark card, default) */
+.flip-card:hover .flip-card__inner     { transform: rotateY(180deg); }
+.flip-card__back                        { transform: rotateY(180deg); }
+
+/* X-axis flip (cream card) */
+.flip-card--x:hover .flip-card__inner  { transform: rotateX(180deg); }
+.flip-card--x .flip-card__back         { transform: rotateX(180deg); }
 
 .flip-card__face {
   position: absolute;
@@ -391,17 +380,17 @@ h1, h2, p { margin: 0; }
   display: flex;
   flex-direction: column;
   border-radius: var(--bento-radius);
-  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .flip-card--dark  .flip-card__face { background: var(--color-ink); }
 .flip-card--cream .flip-card__face { background: var(--color-surface); }
 
-/* Front fades out on hover; back fades in */
-.flip-card__front { transition: opacity 0.18s ease 0.1s; }
-.flip-card:hover .flip-card__front { opacity: 0; transition: opacity 0.15s ease 0s; }
-
-.flip-card__back  { opacity: 0; transition: opacity 0.15s ease 0s; }
-.flip-card:hover .flip-card__back  { opacity: 1; transition: opacity 0.18s ease 0.25s; }
+/* Content fade: text out before flip, text in after flip */
+.flip-card__front > * { transition: opacity 0.18s ease 0.35s; }
+.flip-card:hover .flip-card__front > * { opacity: 0; transition: opacity 0.15s ease 0s; }
+.flip-card__back  > * { opacity: 0; transition: opacity 0.18s ease 0s; }
+.flip-card:hover .flip-card__back  > * { opacity: 1; transition: opacity 0.18s ease 0.4s; }
 
 /* Prompt strip at bottom of front face */
 .flip-prompt-wrap {
