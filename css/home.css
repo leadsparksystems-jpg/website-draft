@@ -182,7 +182,7 @@ h1, h2, p { margin: 0; }
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 .cta-button { background: var(--btn-fill); }
-.page-link  { background: var(--color-page-bg); box-shadow: var(--shadow-button); }
+.page-link  { background: #d9d2ca; box-shadow: var(--shadow-button); }
 
 .cta-button:hover,
 .page-link:hover { transform: translateY(-1px); filter: brightness(1.03); }
