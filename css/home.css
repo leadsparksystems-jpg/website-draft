@@ -298,15 +298,15 @@ h1, h2, p { margin: 0; }
 
 .section-heading--on-dark { color: #ffffff; }
 
-.cta-card-wrap { display: flex; flex-direction: column; gap: 48px; width: 100%; }
+.cta-card-wrap { display: flex; flex-direction: column; gap: var(--hero-wrap-gap); width: 100%; }
 
 .horizontal-text-wrap {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: var(--grid-gap);
   width: 100%;
 }
-.audit-bullets { display: flex; gap: 16px; align-items: stretch; }
+.audit-bullets { display: flex; gap: var(--text-wrap-gap); align-items: stretch; }
 .vertical-line { flex: 0 0 2px; width: 2px; background: var(--color-surface); align-self: stretch; }
 
 .bullet-list {
@@ -473,7 +473,7 @@ h1, h2, p { margin: 0; }
     padding: var(--grid-pad-y) var(--grid-pad-x);
   }
   .audit-card { width: 100%; height: auto; }
-  .horizontal-text-wrap { grid-template-columns: 1fr; gap: 24px; }
+  .horizontal-text-wrap { grid-template-columns: 1fr; gap: var(--hero-wrap-gap); }
 
   /* ── Case study / flip / testimonial: flex column ─────────────────────── */
   .flip-section-grid {
