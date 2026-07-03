@@ -66,7 +66,7 @@
      clamp() bounds keep fluid type from getting too small/large — the min/max
      are sensible defaults [tunable], the vw middle value is from the design.
   --------------------------------------------------------------------------- */
-  --font-hero:      72px;   /* Bricolage Bold, UPPERCASE, line-height 120% */
+  --font-hero:      56px;   /* Bricolage Bold, UPPERCASE, line-height 120% */
   --font-section:   38px;   /* Bricolage SemiBold, Capitalize, lh 110%     */
   --font-secondary: 20px;   /* Bricolage Medium, Capitalize, lh 120%       */
   --font-card:      24px;   /* Bricolage Medium, Capitalize                */
