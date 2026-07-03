@@ -296,9 +296,13 @@ h1, h2, p { margin: 0; }
 .audit-grid { grid-template-rows: repeat(2, minmax(0, 1fr)); }
 .audit-card { grid-column: 1 / span 12; grid-row: 1 / span 2; }
 
-/* Large bento — override small wrap padding with hero-level tokens */
+/* Large bento — hero-level padding, content spread top-to-bottom */
 .audit-card .fill-bento-wrap-small {
   padding: var(--hero-wrap-pad-y) var(--hero-wrap-pad-x);
+  justify-content: space-between;
+}
+.audit-card .cta-card-wrap {
+  gap: var(--fill-wrap-gap);
 }
 
 .section-heading--on-dark { color: #ffffff; }
