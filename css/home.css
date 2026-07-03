@@ -57,8 +57,7 @@ h1, h2, p { margin: 0; }
   line-height: var(--lh-secondary);
   text-transform: capitalize;
 }
-.secondary-heading--muted   { color: var(--color-muted); }
-.secondary-heading--regular { font-weight: var(--weight-label); }
+.secondary-heading--muted { color: var(--color-muted); }
 
 .card-heading {
   font-weight: var(--weight-card);
