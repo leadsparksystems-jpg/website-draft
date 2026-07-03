@@ -233,34 +233,97 @@
 
         <!-- Flip cards -->
         <div class="flip-grid">
+
+          <!-- Dark card · €10k-30k · Y-axis flip -->
           <div class="flip-card flip-card--dark">
             <div class="flip-card__inner">
               <div class="flip-card__face flip-card__front">
-                <p class="flip-card__stat light-brand">€10k-30k</p>
-                <p class="flip-card__hint">(Flip to learn more)</p>
+                <div class="fill-bento-wrap-small">
+                  <div class="text-wrap">
+                    <p class="flip-card__stat light-brand">€10k-30k</p>
+                    <p class="secondary-heading cream">Deals, consistently generated.</p>
+                  </div>
+                </div>
+                <div class="flip-prompt-wrap">
+                  <p class="flip-card__hint">(Flip to learn more)</p>
+                </div>
               </div>
               <div class="flip-card__face flip-card__back">
-                <p class="secondary-heading cream">Deals, consistently generated.</p>
+                <div class="fill-bento-wrap-small">
+                  <div class="flip-card__content-wrap">
+                    <span class="vertical-line" aria-hidden="true"></span>
+                    <div class="text-wrap text-wrap--flush">
+                      <p class="paragraph paragraph--on-dark">The website communicated the premium nature of the Arctic Wellness Brand through it's design, and brought in high end buyers - ready to invest.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="flip-card flip-card--cream">
+          <!-- Cream card · Over 80% · X-axis flip -->
+          <div class="flip-card flip-card--cream flip-card--x">
             <div class="flip-card__inner">
               <div class="flip-card__face flip-card__front">
-                <p class="flip-card__stat brand-green">Over 80%</p>
-                <p class="flip-card__hint flip-card__hint--dark">(Flip to learn more)</p>
+                <div class="fill-bento-wrap-small">
+                  <div class="text-wrap">
+                    <p class="flip-card__stat brand-green">Over 80%</p>
+                    <p class="secondary-heading">of enquiries are qualified (ready to buy)</p>
+                  </div>
+                </div>
+                <div class="flip-prompt-wrap">
+                  <p class="flip-card__hint flip-card__hint--dark">(Flip to learn more)</p>
+                </div>
               </div>
               <div class="flip-card__face flip-card__back">
-                <p class="secondary-heading">of enquiries are qualified (ready to buy).</p>
+                <div class="fill-bento-wrap-small">
+                  <div class="flip-card__content-wrap">
+                    <span class="vertical-line vertical-line--dark" aria-hidden="true"></span>
+                    <div class="text-wrap text-wrap--flush">
+                      <p class="paragraph">Even their referrals look them up before deciding. The site shows exactly who they are and why they're the right call so the leads they already had convert better too.</p>
+                      <p class="paragraph">Our search engine optimisation (SEO) strategies led to the most qualified high intent buyers finding them.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
 
       </div>
     </section>
 
   </main>
+
+  <script>
+  (function () {
+    var grid = document.querySelector('.flip-grid');
+    var cards = Array.from(document.querySelectorAll('.flip-card'));
+    if (!grid || !cards.length) return;
+
+    function isMobile() { return window.innerWidth <= 767; }
+    function closeAll() { cards.forEach(function (c) { c.classList.remove('is-open'); }); }
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        if (!isMobile()) return;
+        if (card.classList.contains('is-open')) {
+          card.classList.remove('is-open');
+        } else {
+          closeAll();
+          card.classList.add('is-open');
+        }
+      });
+    });
+
+    try {
+      var observer = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) closeAll();
+      }, { threshold: 0 });
+      observer.observe(grid);
+    } catch (e) {}
+  }());
+  </script>
 </body>
 </html>
