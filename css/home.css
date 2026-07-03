@@ -73,7 +73,7 @@ h1, h2, p { margin: 0; }
   color: var(--color-paragraph);
 }
 /* paragraph | block — capped at 50% of parent (design-system rule) */
-.paragraph--block { max-width: 50%; }
+.paragraph--block { max-width: 66%; }
 
 /* Inline text-colour highlights seen in the design */
 .ember        { color: var(--color-ember-strong); }
