@@ -229,11 +229,14 @@ Pair with `cta-button` inside the same `button-wrap`.
 `secondary-heading | centered` + `section-heading | green | centered` +
 `secondary-heading | centered`. Centered stat cluster used in hero side cells.
 
-### 6.5 Green CTA card (`fill-bento | green`)
+### 6.5 Dark CTA card (`fill-bento | green`)
 
-Full-width green bento: a soft-ember **star** icon, a large white
-`secondary-heading`, a `text-wrap` of bullet points (optionally divided by a
-`vertical-line`), and a right-aligned `cta-button`.
+Full-width **dark-green** bento — background is `--color-ink` (#273730), *not*
+`--color-green`; `--color-green` (#40775f) and `--color-light-brand` (#a9d8c0)
+are used as inline **text** accents. Contains a soft-ember **star** icon, a large
+cream `section-heading` (with `Free` highlighted in light-brand), a `text-wrap`
+of bullet points divided by a `vertical-line`, and a right-aligned `cta-button`.
+Text on this bento is cream (`--color-surface`).
 
 ---
 

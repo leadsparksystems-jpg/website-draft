@@ -30,7 +30,8 @@
   --color-ink:           #273730; /* "Dark Green" / "Dark Text" — text+borders */
   --color-ember:         #e8a075; /* "Soft Ember" — primary CTA button fill    */
   --color-ember-strong:  #d8602f; /* "Brand Ember" — strong accent             */
-  --color-green:         #40775f; /* "Brand Green" — green bento fill          */
+  --color-green:         #40775f; /* "Brand Green" — accent text / quotes      */
+  --color-light-brand:   #a9d8c0; /* "Light Brand" — light-green highlight text */
   --color-paragraph:     rgba(20, 41, 26, 0.8);  /* "Paragraph" #14291acc      */
   --color-muted:         rgba(20, 41, 26, 0.6);  /* "Color" (sub-head) #14291a99 */
 
