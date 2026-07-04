@@ -625,7 +625,7 @@ h1, h2, p { margin: 0; }
   .flip-card--cream {
     grid-column: unset;
     flex: 1 1 0;
-    min-height: 180px;
+    min-height: 200px;
     cursor: pointer;
     transition: flex-grow 0.4s ease-in-out;
   }
@@ -636,7 +636,7 @@ h1, h2, p { margin: 0; }
   .flip-card__inner {
     position: relative;
     height: 100%;
-    min-height: 180px;
+    min-height: 200px;
     border-radius: var(--bento-radius);
     transform: none !important;
     transform-style: flat;
@@ -658,11 +658,11 @@ h1, h2, p { margin: 0; }
     transform: none !important;
     transition: opacity 0.25s ease-in-out;
   }
-  /* A front face flows in-document ONLY while no card is open (default 50/50).
-     Once a card opens, ONLY the opened card's back flows and drives the height;
-     the shrunken sibling's front returns to absolute so its (faded, narrow-
-     wrapped) content can't inflate the row height. */
-  .flip-grid:not(:has(.flip-card.is-open)) .flip-card__front,
+  /* Front faces are ALWAYS absolute — they never drive height. This is what
+     prevents the close-tap glitch: on close the widths animate over 0.4s, and
+     if a still-narrow front were in-flow its content would wrap tall and spike
+     the height. Default/closed height comes from the inner's min-height below.
+     ONLY the opened card's back flows in-document, so it hugs its content. */
   .flip-card.is-open .flip-card__back {
     position: relative;
     inset: auto;
