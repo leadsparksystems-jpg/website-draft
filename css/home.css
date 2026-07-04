@@ -655,11 +655,16 @@ h1, h2, p { margin: 0; }
     transform: none !important;
     transition: opacity 0.25s ease-in-out;
   }
-  .flip-card:not(.is-open) .flip-card__front,
+  /* A front face flows in-document ONLY while no card is open (default 50/50).
+     Once a card opens, ONLY the opened card's back flows and drives the height;
+     the shrunken sibling's front returns to absolute so its (faded, narrow-
+     wrapped) content can't inflate the row height. */
+  .flip-grid:not(:has(.flip-card.is-open)) .flip-card__front,
   .flip-card.is-open .flip-card__back {
     position: relative;
     inset: auto;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     overflow: visible;
   }
   .flip-card__back { opacity: 0; pointer-events: none; }
