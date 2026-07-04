@@ -454,6 +454,9 @@ h1, h2, p { margin: 0; }
   width: 100%;
 }
 .flip-card__content-wrap > .text-wrap { flex: 1; width: 0; }
+/* Restore a proper bottom gap under the back paragraph(s) — the --flush
+   modifier zeroes it, so re-apply the text-wrap bottom padding token. */
+.flip-card__back .text-wrap--flush { padding-bottom: var(--text-wrap-pad-bottom); }
 
 .vertical-line--dark { background: var(--color-ink); }
 /* Small bentos (flip cards): thinner divider so it reads at the same visual
@@ -667,6 +670,11 @@ h1, h2, p { margin: 0; }
     min-height: 100%;
     overflow: visible;
   }
+  /* Back content sizes to its own height (incl. padding) so the card hugs it,
+     rather than vertically flex-filling and clipping the bottom text-wrap
+     padding. (Only the vertical fill is relaxed — the text-wrap keeps its
+     horizontal flex so lines still fill the width.) */
+  .flip-card.is-open .flip-card__back .flip-card__content-wrap { flex: 0 0 auto; }
   .flip-card__back { opacity: 0; pointer-events: none; }
 
   /* Neutralise sticky touch :hover */
