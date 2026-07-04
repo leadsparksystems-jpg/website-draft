@@ -97,7 +97,8 @@
 
   --bento-radius: 8px;
 
-  --line-weight: 2px;   /* thickness of every vertical divider line (white + dark) */
+  --line-weight: 2px;        /* divider thickness — large bentos (audit) */
+  --line-weight-thin: 1.5px; /* divider thickness — small bentos (flip cards); optically matches 2px */
 
   /* Section heights */
   --hero-max-height: 86vh;   /* hero-section cap, desktop only          */

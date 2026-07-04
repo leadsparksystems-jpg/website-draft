@@ -456,6 +456,13 @@ h1, h2, p { margin: 0; }
 .flip-card__content-wrap > .text-wrap { flex: 1; width: 0; }
 
 .vertical-line--dark { background: var(--color-ink); }
+/* Small bentos (flip cards): thinner divider so it reads at the same visual
+   weight as the thicker line on the larger audit bento. */
+.flip-card__content-wrap .vertical-line {
+  flex-basis: var(--line-weight-thin);
+  width: var(--line-weight-thin);
+  min-width: var(--line-weight-thin);
+}
 .paragraph--on-dark  { color: #ffffff; font-weight: 300; font-style: normal; -webkit-font-smoothing: auto; font-smoothing: auto; }
 
 .flip-card__stat {
