@@ -97,6 +97,8 @@
 
   --bento-radius: 8px;
 
+  --line-weight: 2px;   /* thickness of every vertical divider line (white + dark) */
+
   /* Section heights */
   --hero-max-height: 86vh;   /* hero-section cap, desktop only          */
 

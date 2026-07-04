@@ -330,7 +330,15 @@ h1, h2, p { margin: 0; }
   width: 100%;
 }
 .audit-bullets { display: flex; gap: var(--text-wrap-gap); align-items: stretch; }
-.vertical-line { flex: 0 0 2px; width: 2px; background: var(--color-surface); align-self: stretch; }
+/* Single source of truth for divider thickness — identical for white + dark.
+   min-width + fixed basis prevents any per-context flex rounding difference. */
+.vertical-line {
+  flex: 0 0 var(--line-weight);
+  width: var(--line-weight);
+  min-width: var(--line-weight);
+  background: var(--color-surface);
+  align-self: stretch;
+}
 
 .bullet-list {
   display: flex;
