@@ -492,6 +492,8 @@ h1, h2, p { margin: 0; }
   }
   .audit-card { width: 100%; height: auto; }
   .horizontal-text-wrap { grid-template-columns: 1fr; gap: var(--hero-wrap-gap); }
+  /* Stacked layout — vertical divider line is redundant on iPad/phone */
+  .audit-bullets .vertical-line { display: none; }
 
   /* ── Case study / flip / testimonial: flex column ─────────────────────── */
   .flip-section-grid {
