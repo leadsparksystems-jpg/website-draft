@@ -408,13 +408,18 @@ h1, h2, p { margin: 0; }
   will-change: transform;
 }
 
-/* Y-axis flip (dark card, default) */
-.flip-card:hover .flip-card__inner     { transform: rotateY(180deg); }
-.flip-card__back                        { transform: rotateY(180deg); }
+/* Back-face 3D positioning (global; mobile neutralises the transform) */
+.flip-card__back                { transform: rotateY(180deg); }
+.flip-card--x .flip-card__back  { transform: rotateX(180deg); }
 
-/* X-axis flip (cream card) */
-.flip-card--x:hover .flip-card__inner  { transform: rotateX(180deg); }
-.flip-card--x .flip-card__back         { transform: rotateX(180deg); }
+/* Hover-driven flip is DESKTOP-ONLY. Gating it behind (hover: hover) stops
+   touch devices — which apply a sticky :hover to a tapped element — from
+   firing these rules and fighting the mobile tap/open logic (that leak made
+   the tapped card's content vanish and the height glitch). */
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card__inner     { transform: rotateY(180deg); }
+  .flip-card--x:hover .flip-card__inner  { transform: rotateX(180deg); }
+}
 
 .flip-card__face {
   position: absolute;
@@ -429,11 +434,15 @@ h1, h2, p { margin: 0; }
 .flip-card--dark  .flip-card__face { background: var(--color-ink); }
 .flip-card--cream .flip-card__face { background: var(--color-surface); }
 
-/* Content fade: text fades out first, back fades in after flip lands */
-.flip-card__front > * { transition: opacity 0.2s ease 0.45s; }
-.flip-card:hover .flip-card__front > * { opacity: 0; transition: opacity 0.15s ease 0s; }
-.flip-card__back  > * { opacity: 0; transition: opacity 0.2s ease 0s; }
-.flip-card:hover .flip-card__back  > * { opacity: 1; transition: opacity 0.2s ease 0.5s; }
+/* Content fade — DESKTOP-ONLY (same touch-hover reasoning as above). On touch
+   devices these never apply, so back content is driven solely by the mobile
+   is-open rules. */
+@media (hover: hover) and (pointer: fine) {
+  .flip-card__front > * { transition: opacity 0.2s ease 0.45s; }
+  .flip-card:hover .flip-card__front > * { opacity: 0; transition: opacity 0.15s ease 0s; }
+  .flip-card__back  > * { opacity: 0; transition: opacity 0.2s ease 0s; }
+  .flip-card:hover .flip-card__back  > * { opacity: 1; transition: opacity 0.2s ease 0.5s; }
+}
 
 /* Prompt strip at bottom of front face */
 .flip-prompt-wrap {
@@ -627,7 +636,8 @@ h1, h2, p { margin: 0; }
     flex: 1 1 0;
     min-height: 200px;
     cursor: pointer;
-    transition: flex-grow 0.4s ease-in-out;
+    /* 0.16s delay so the text fade lands before the card starts expanding */
+    transition: flex-grow 0.38s ease-in-out 0.16s;
   }
 
   /* Disable desktop perspective/transforms. Background lives on the inner
@@ -677,19 +687,20 @@ h1, h2, p { margin: 0; }
   .flip-card.is-open .flip-card__back .flip-card__content-wrap { flex: 0 0 auto; }
   .flip-card__back { opacity: 0; pointer-events: none; }
 
-  /* Neutralise sticky touch :hover */
-  .flip-card:hover .flip-card__front { opacity: 1; }
-  .flip-card:hover .flip-card__back  { opacity: 0; }
+  /* Sequence: the outgoing text fades FIRST (quick, no delay), then the width
+     expands (delayed so it starts after the fade), then the new content fades
+     in. Faces + their content fade fast; flex-grow waits 0.16s. */
+  .flip-card__face { transition: opacity 0.16s ease; }
 
   /* Opened card dominates the width; the sibling shrinks hard (~90/10) */
   .flip-grid:has(.flip-card.is-open) .flip-card         { flex-grow: 1; }
   .flip-grid:has(.flip-card.is-open) .flip-card.is-open  { flex-grow: 9; }
   .flip-card.is-open .flip-card__front { opacity: 0; pointer-events: none; }
-  .flip-card.is-open .flip-card__back  { opacity: 1; pointer-events: auto; }
+  .flip-card.is-open .flip-card__back  { opacity: 1; pointer-events: auto; transition: opacity 0.18s ease 0.18s; }
 
   /* Face content fades with the face; base state fully visible */
   .flip-card__front > *,
-  .flip-card__back > * { opacity: 1; transition: opacity 0.25s ease; }
+  .flip-card__back > * { opacity: 1; transition: opacity 0.16s ease; }
 
   /* Shrunken sibling: fade its front content, reveal the vertical tap prompt */
   .flip-grid:has(.flip-card.is-open) .flip-card:not(.is-open) .flip-card__front > * { opacity: 0; }
