@@ -52,7 +52,7 @@ h1, h2, p { margin: 0; }
 }
 
 .secondary-heading {
-  font-weight: var(--weight-secondary);
+  font-weight: 400;
   font-size: var(--font-secondary);
   line-height: var(--lh-secondary);
   text-transform: capitalize;
@@ -177,7 +177,7 @@ h1, h2, p { margin: 0; }
 .button-wrap { display: flex; align-items: center; padding: var(--button-wrap-pad-y) var(--button-wrap-pad-x); width: 100%; }
 .button-wrap--right  { justify-content: flex-end; }
 .button-wrap--center { justify-content: center; }
-.button-wrap--pair   { gap: 16px; flex-wrap: wrap; }
+.button-wrap--pair   { gap: 48px; flex-wrap: wrap; }
 
 /* -----------------------------------------------------------------------------
    CTA BUTTON  (pill) + PAGE LINK
@@ -341,11 +341,14 @@ h1, h2, p { margin: 0; }
 .testimonial__quote {
   font-family: var(--font-heading);
   font-variation-settings: var(--font-heading-variation);
-  font-weight: var(--weight-secondary);
+  font-weight: 500;
   font-size: var(--font-card);
   line-height: 1.35;
   color: var(--color-green);
 }
+/* Testimonial attribution + flip card sub-headings stay Medium (500) */
+.testimonial .secondary-heading,
+.flip-card .secondary-heading { font-weight: 500; }
 
 /* Flip cards — 3D flip on hover (desktop) */
 .flip-card {
