@@ -354,6 +354,14 @@ h1, h2, p { margin: 0; }
   perspective: 1200px;
   /* overflow: hidden intentionally omitted — clips 3D mid-flip */
 }
+.flip-grid {
+  grid-column: 1 / span 8;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
 .flip-card--dark  { grid-column: 1 / span 3; }
 .flip-card--cream { grid-column: 4 / span 5; }
 
