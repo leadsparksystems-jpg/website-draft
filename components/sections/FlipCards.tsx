@@ -25,6 +25,7 @@ function FlipCard({
       onTouchEnd={(e) => { e.preventDefault(); onToggle() }}
     >
       <div className="flip-card__inner">
+        <span className="flip-card__reprompt" aria-hidden="true">Tap to open</span>
         <div className="flip-card__face flip-card__front">{front}</div>
         <div className="flip-card__face flip-card__back">{back}</div>
       </div>
