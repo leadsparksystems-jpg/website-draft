@@ -136,10 +136,15 @@ Wraps live **inside** bentos and own all padding + gaps. There are reusable
 | `center-content-wrap` | Centered stat/label cluster | — |
 | `stacked-card-wrap` | Icon/image + heading + paragraph card | — |
 | `hz-fill-wrap` | Horizontal fill row (text block in cards) | — |
-| `horizontal-text-wrap` | Row on desktop, **stacks vertical on mobile** | — |
+| `horizontal-text-wrap` | Row on desktop, **stacks vertical on mobile** | `--stacked-wrap-gap` |
 
 - `| centered` variants center their children.
 - `stretch-wrap` must use `height: auto` on mobile so a hug-bento actually hugs.
+- **Stacked heading↔content gap:** when a side-by-side wrap collapses to one column
+  on iPad/phone, use `--stacked-wrap-gap` (32px iPad / 24px phone) for the vertical
+  gap — **not** `--hero-wrap-gap` (96/48px). `--hero-wrap-gap` is for large section
+  separations; using it between a heading and its body copy produces a jarring,
+  oversized gap on mobile.
 
 ---
 

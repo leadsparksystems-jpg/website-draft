@@ -107,6 +107,13 @@
   --hero-wrap-pad-x: 32px;
   --hero-wrap-pad-y: 32px;
 
+  /* stacked-wrap-gap — vertical gap between a heading and its content when a
+     side-by-side wrap (e.g. horizontal-text-wrap) collapses to a single column
+     on iPad/phone. Deliberately SMALLER than --hero-wrap-gap: that token is for
+     large section separations and reads as a "crazy" gap between heading + body.
+     Use THIS token for heading↔content stacking, never --hero-wrap-gap. */
+  --stacked-wrap-gap: 32px;
+
   /* fill_bento-wrap-small (reused across most small fill bentos) */
   --fill-wrap-gap: 16px;
   --fill-wrap-pad-x: 16px;
@@ -190,6 +197,8 @@
     --hero-wrap-gap: 48px;
     --hero-wrap-pad-x: 16px;
     --hero-wrap-pad-y: 16px;
+
+    --stacked-wrap-gap: 24px;  /* tighter heading↔content gap on phone */
 
     --fill-wrap-gap: 8px;
     --fill-wrap-pad-x: 8px;

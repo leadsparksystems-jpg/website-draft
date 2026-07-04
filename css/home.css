@@ -125,11 +125,17 @@ h1, h2, p { margin: 0; }
 .hug-bento     { background: var(--color-surface); height: auto; align-self: start; }
 .fill-bento--green { background: var(--color-ink); }  /* "green" bento = dark green */
 
-/* All typography on green (dark-ink) bentos defaults to white for contrast */
+/* All typography on green (dark-ink) bentos defaults to white for contrast.
+   Keep site-wide antialiased smoothing so headings render at the SAME visual
+   weight as every other heading (overriding to `auto` made white-on-dark text
+   look bolder than its real weight). Do NOT set font-weight here — that would
+   override each heading's own weight; only body copy is lightened, below. */
 .fill-bento--green .section-heading,
 .fill-bento--green .secondary-heading,
 .fill-bento--green .card-heading,
-.fill-bento--green .paragraph { color: #ffffff; font-weight: 300; -webkit-font-smoothing: auto; }
+.fill-bento--green .paragraph { color: #ffffff; }
+/* Body copy on green bentos renders lighter (300) to align with dark-on-light text */
+.fill-bento--green .paragraph { font-weight: 300; }
 /* Preserve intentional brand colour highlights within green bentos */
 .fill-bento--green .light-brand { color: var(--color-light-brand); }
 .fill-bento--green .brand-green  { color: var(--color-green); }
@@ -491,7 +497,7 @@ h1, h2, p { margin: 0; }
     padding: var(--grid-pad-y) var(--grid-pad-x);
   }
   .audit-card { width: 100%; height: auto; }
-  .horizontal-text-wrap { grid-template-columns: 1fr; gap: var(--hero-wrap-gap); }
+  .horizontal-text-wrap { grid-template-columns: 1fr; gap: var(--stacked-wrap-gap); }
   /* Stacked layout — vertical divider line is redundant on iPad/phone */
   .audit-bullets .vertical-line { display: none; }
 
