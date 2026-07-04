@@ -310,6 +310,10 @@ h1, h2, p { margin: 0; }
 .audit-card .cta-card-wrap {
   gap: var(--fill-wrap-gap);
 }
+/* Match the content inset of the other large bentos (hero, case-study): their
+   copy sits in a text-wrap that adds --text-wrap-pad-x on top of the wrap
+   padding. horizontal-text-wrap has none, so add it here for parity. */
+.audit-card .horizontal-text-wrap { padding-inline: var(--text-wrap-pad-x); }
 
 .section-heading--on-dark { color: #ffffff; }
 
