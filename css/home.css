@@ -503,8 +503,13 @@ h1, h2, p { margin: 0; }
   .case-study,
   .testimonial { width: 100%; height: auto; }
 
-  /* Flip grid: already flex from desktop, just ensure full width */
-  .flip-grid { width: 100%; padding: 0; }
+  /* Flip grid: explicit grid so cards stay side-by-side in the 8-col container */
+  .flip-grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    width: 100%;
+    padding: 0;
+  }
 }
 
 /* =============================================================================
