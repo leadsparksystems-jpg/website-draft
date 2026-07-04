@@ -96,7 +96,7 @@ export function FlipCards() {
                 <div className="fill-bento-wrap-small">
                   <div className="text-wrap">
                     <p className="flip-card__stat light-brand">€10k-30k</p>
-                    <p className="secondary-heading cream">Deals, consistently generated.</p>
+                    <p className="card-heading cream">Deals, consistently generated.</p>
                   </div>
                 </div>
                 <div className="flip-prompt-wrap">
@@ -126,7 +126,7 @@ export function FlipCards() {
                 <div className="fill-bento-wrap-small">
                   <div className="text-wrap">
                     <p className="flip-card__stat brand-green">Over 80%</p>
-                    <p className="secondary-heading">of enquiries are qualified (ready to buy)</p>
+                    <p className="card-heading">of enquiries are qualified (ready to buy)</p>
                   </div>
                 </div>
                 <div className="flip-prompt-wrap">

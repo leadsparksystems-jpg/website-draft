@@ -163,13 +163,20 @@ There are **exactly four** heading types. **Do not create new ones.**
 |---|---|---|---|---|
 | **Hero heading** | Bricolage **Bold** | 72px | UPPERCASE | Hero section only (occasionally a large CTA section) |
 | **Section heading** | Bricolage **SemiBold** | 38px | Capitalize | Most sections; both conversion + SEO headings |
-| **Secondary / sub heading** | Bricolage **Medium** | 20px | Capitalize | Under hero/section headings; keyword-heavy; also on some cards (e.g. stats) |
-| **Card heading** | Bricolage **Medium** | 24px | Capitalize | Smaller important bentos (visible on the canvas) |
+| **Secondary / sub heading** | Bricolage **Regular** | 20px | Capitalize | Descriptive sub-copy under hero/section headings; keyword-heavy |
+| **Card heading** | Bricolage **Medium** | 20px | Capitalize | Titles of the small bento cards (problem cards, flip cards) |
+
+**Secondary vs Card heading** — they share the **same size** (`--font-card`
+references `--font-secondary`). The ONLY difference is weight: secondary is
+**Regular (400)**, card heading is **Medium (500)**. Use the card heading for the
+title of a small bento card; use the secondary heading for descriptive sub-copy
+sitting under a larger heading.
 
 Paragraph (not a heading): **DM Mono Regular 16px**, colour `--color-paragraph`.
 
-Colours: headings use `--color-ink`; muted secondary headings use `--color-muted`;
-on a green bento, headings are white (`--color-on-green`).
+Colours: card headings use `--color-ink`; **secondary headings on a cream bento
+are muted** (`--color-muted`); on a green bento, headings are white
+(`--color-on-green`).
 
 ### 5.2 CRITICAL — semantic HTML vs visual headings
 

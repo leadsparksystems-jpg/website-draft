@@ -33,7 +33,7 @@ export function Problem() {
             <div className="fill-bento-wrap-small">
               <div className="stacked-card-wrap">
                 <div className="text-wrap">
-                  <p className="secondary-heading">{card.num}: {card.heading}</p>
+                  <p className="card-heading">{card.num}: {card.heading}</p>
                   <p className="paragraph">{card.body}</p>
                 </div>
               </div>
