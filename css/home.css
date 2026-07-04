@@ -537,6 +537,11 @@ h1, h2, p { margin: 0; }
 
   /* Audit bento: stack content naturally on mobile, no space-between stretch */
   .audit-card .fill-bento-wrap-small { justify-content: flex-start; }
+  /* Keep the audit CTA right-aligned with a cohesive gap above it */
+  .audit-card .button-wrap--right {
+    justify-content: flex-end;
+    padding-top: var(--button-wrap-pad-top);
+  }
 
   /* ── Problem cards: 2-col pair grid still applies on phone ────────────── */
   .problem-grid {
