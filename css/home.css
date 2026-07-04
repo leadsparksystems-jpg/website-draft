@@ -629,24 +629,26 @@ h1, h2, p { margin: 0; }
   /* Row stretches every card to the tallest (the opened one) */
   .flip-grid { display: flex; gap: 8px; padding: 0; align-items: stretch; }
 
-  /* Default: equal 50/50 split; width animates on open */
+  /* FIXED height — this is the key to a glitch-free interaction. Because the
+     card height never changes, ONLY the width animates on open/close, so the
+     back text re-wrapping mid-animation can never spike or collapse the height.
+     Height is sized to fit the tallest back content at the expanded width
+     across phone sizes. */
   .flip-card--dark,
   .flip-card--cream {
     grid-column: unset;
     flex: 1 1 0;
-    min-height: 200px;
     cursor: pointer;
-    /* 0.16s delay so the text fade lands before the card starts expanding */
+    /* 0.16s delay so the outgoing text fade lands before the width expands */
     transition: flex-grow 0.38s ease-in-out 0.16s;
   }
 
   /* Disable desktop perspective/transforms. Background lives on the inner
-     wrapper so a shrunken card still fills the (taller) opened card's height. */
+     wrapper. Both faces are absolute and fill this fixed box. */
   .flip-card { perspective: none; }
   .flip-card__inner {
     position: relative;
-    height: 100%;
-    min-height: 200px;
+    height: 268px;
     border-radius: var(--bento-radius);
     transform: none !important;
     transform-style: flat;
@@ -655,10 +657,14 @@ h1, h2, p { margin: 0; }
   }
   .flip-card--dark  .flip-card__inner { background: var(--color-ink); }
   .flip-card--cream .flip-card__inner { background: var(--color-surface); }
+  /* Centre the back content as a block in the fixed box so slack (wide phones) /
+     minor overflow (very narrow phones) is balanced rather than dumped at the
+     bottom. The content-wrap must not flex-fill or centring has no effect. */
+  .flip-card__back .fill-bento-wrap-small { justify-content: center; }
+  .flip-card__back .flip-card__content-wrap { flex: 0 0 auto; }
 
-  /* Hidden faces overlay absolutely (transparent bg — inner provides colour).
-     The VISIBLE face flows in-document so the card height HUGS its content —
-     this is what lets the opened card grow to fit its paragraph(s). */
+  /* Both faces overlay absolutely and cross-fade via opacity (no in-flow face,
+     so nothing content-driven can affect height). */
   .flip-card__face {
     position: absolute;
     inset: 0;
@@ -666,31 +672,9 @@ h1, h2, p { margin: 0; }
     -webkit-backface-visibility: visible;
     backface-visibility: visible;
     transform: none !important;
-    transition: opacity 0.25s ease-in-out;
+    transition: opacity 0.16s ease;
   }
-  /* Front faces are ALWAYS absolute — they never drive height. This is what
-     prevents the close-tap glitch: on close the widths animate over 0.4s, and
-     if a still-narrow front were in-flow its content would wrap tall and spike
-     the height. Default/closed height comes from the inner's min-height below.
-     ONLY the opened card's back flows in-document, so it hugs its content. */
-  .flip-card.is-open .flip-card__back {
-    position: relative;
-    inset: auto;
-    height: auto;
-    min-height: 100%;
-    overflow: visible;
-  }
-  /* Back content sizes to its own height (incl. padding) so the card hugs it,
-     rather than vertically flex-filling and clipping the bottom text-wrap
-     padding. (Only the vertical fill is relaxed — the text-wrap keeps its
-     horizontal flex so lines still fill the width.) */
-  .flip-card.is-open .flip-card__back .flip-card__content-wrap { flex: 0 0 auto; }
   .flip-card__back { opacity: 0; pointer-events: none; }
-
-  /* Sequence: the outgoing text fades FIRST (quick, no delay), then the width
-     expands (delayed so it starts after the fade), then the new content fades
-     in. Faces + their content fade fast; flex-grow waits 0.16s. */
-  .flip-card__face { transition: opacity 0.16s ease; }
 
   /* Opened card dominates the width; the sibling shrinks hard (~90/10) */
   .flip-grid:has(.flip-card.is-open) .flip-card         { flex-grow: 1; }
