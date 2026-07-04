@@ -530,6 +530,8 @@ h1, h2, p { margin: 0; }
 
   .paragraph--block { max-width: 100%; }
   .button-wrap--right { justify-content: flex-start; }
+  /* Pair buttons stack on phone — tighten the (desktop-wide) 48px gap */
+  .button-wrap--pair { gap: 12px; }
 
   /* Audit bento: stack content naturally on mobile, no space-between stretch */
   .audit-card .fill-bento-wrap-small { justify-content: flex-start; }
