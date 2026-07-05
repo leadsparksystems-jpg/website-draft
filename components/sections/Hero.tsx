@@ -7,7 +7,8 @@ export function Hero() {
 
         <div className="bento fill-bento hero-logo">
           <div className="logo-banner-wrap">
-            <span className="logo-banner__text">LEADSPARK</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="logo-banner__img" src="/assets/images/LEADSPARK 1.png" alt="LEADSPARK" />
           </div>
         </div>
 

@@ -1,10 +1,10 @@
 import { CtaButton } from "@/components/ui/cta-button"
 
 const cards = [
-  { num: "01", heading: "Someone searches for your trade.", body: "80% of customers looking for a service search online first.", variant: "fill-bento" },
-  { num: "02", heading: "You don't show up. Your competitor does.", body: "Your competitor who does a worse job than you is recommended.", variant: "fill-bento" },
-  { num: "03", heading: "They get the call. You never knew it was going.", body: "Because they are better? No. They have the right customer acquisition system in place.", variant: "hug-bento" },
-  { num: "04", heading: "For those who do find you...", body: "Half slip away — no system to follow up, so they go with the next name on the list.", variant: "fill-bento" },
+  { num: "01", heading: "Someone searches for your trade.", body: "80% of customers looking for a service search online first.", variant: "fill-bento", icon: "/assets/images/Binochluars.png" },
+  { num: "02", heading: "You don't show up. Your competitor does.", body: "Your competitor who does a worse job than you is recommended.", variant: "fill-bento", icon: "/assets/images/Eye.png" },
+  { num: "03", heading: "They get the call. You never knew it was going.", body: "Because they are better? No. They have the right customer acquisition system in place.", variant: "hug-bento", icon: "/assets/images/Phone.png" },
+  { num: "04", heading: "For those who do find you...", body: "Half slip away — no system to follow up, so they go with the next name on the list.", variant: "fill-bento", icon: "/assets/images/Falling Person.png" },
 ]
 
 export function Problem() {
@@ -32,6 +32,10 @@ export function Problem() {
           <div key={i} className={`bento ${card.variant} problem-card problem-card--${i + 1}`}>
             <div className="fill-bento-wrap-small">
               <div className="stacked-card-wrap">
+                <div className="card-icon-wrap">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img className="card-icon" src={card.icon} alt="" aria-hidden="true" />
+                </div>
                 <div className="text-wrap">
                   <p className="card-heading">{card.num}: {card.heading}</p>
                   <p className="paragraph">{card.body}</p>

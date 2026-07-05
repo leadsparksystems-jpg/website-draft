@@ -253,16 +253,13 @@ h1, h2, p { margin: 0; }
   height: 100%;
   padding: var(--logo-wrap-pad-y) var(--logo-wrap-pad-x);
 }
-.logo-banner__text {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-family: var(--font-heading);
-  font-variation-settings: var(--font-heading-variation);
-  font-weight: var(--weight-hero);
-  font-size: clamp(28px, 3vw, 44px);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--color-ink);
+/* LEADSPARK wordmark — Figma ships this as an image fill, not live type */
+.logo-banner__img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
   opacity: 0.4;
 }
 
@@ -300,6 +297,20 @@ h1, h2, p { margin: 0; }
 
 .stacked-card-wrap { display: flex; flex: 1; flex-direction: column; gap: var(--fill-wrap-gap); width: 100%; }
 
+/* Problem-card icons (binoculars / eye / phone / falling person). Figma sizes
+   each icon individually and vertically centres it in a 100px-tall box with an
+   ~8px left inset; overflow stays visible so the taller "falling person" icon
+   is allowed to bleed slightly past the box top/bottom, matching the design. */
+.card-icon-wrap {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding-left: 8px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+.card-icon { display: block; height: auto; width: auto; }
+
 /* -----------------------------------------------------------------------------
    AUDIT CTA (dark/green) SECTION
 ----------------------------------------------------------------------------- */
@@ -320,6 +331,9 @@ h1, h2, p { margin: 0; }
 .audit-card .horizontal-text-wrap { padding-inline: var(--text-wrap-pad-x); }
 
 .section-heading--on-dark { color: #ffffff; }
+
+/* Audit card spark icon — fixed 50x50 at every breakpoint (matches Figma) */
+.audit-spark { width: 50px; height: 50px; display: block; flex-shrink: 0; }
 
 .cta-card-wrap { display: flex; flex-direction: column; gap: var(--hero-wrap-gap); width: 100%; }
 
@@ -557,6 +571,17 @@ h1, h2, p { margin: 0; }
   .problem-card--2 { grid-column: 2; grid-row: 2; }
   .problem-card--3 { grid-column: 1; grid-row: 3; }
   .problem-card--4 { grid-column: 2; grid-row: 3; }
+
+  /* Problem-card icons shrink to the small-card box (Figma mobile frame: 60px
+     tall). Widths are fluid (vw), sized off the 390px mobile Figma frame so
+     they scale with the viewport rather than jumping at a fixed breakpoint;
+     clamped so they don't shrink below a legible floor or balloon past their
+     desktop size as the viewport approaches 991px. */
+  .card-icon-wrap { height: 60px; padding-left: 4px; }
+  .problem-card--1 .card-icon { width: clamp(40px, 14.3vw, 107px); }
+  .problem-card--2 .card-icon { width: clamp(38px, 12.8vw, 103px); }
+  .problem-card--3 .card-icon { width: clamp(28px, 9.7vw, 73px); }
+  .problem-card--4 .card-icon { width: clamp(27px, 9.0vw, 87px); }
 
   /* ── Audit section: single bento, flex column ─────────────────────────── */
   .audit-grid {

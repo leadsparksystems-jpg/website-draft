@@ -6,6 +6,8 @@ export function AuditCTA() {
       <div className="main-grid audit-grid">
         <div className="bento fill-bento fill-bento--green audit-card">
           <div className="fill-bento-wrap-small">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="audit-spark" src="/assets/icons/green spark.png" alt="" aria-hidden="true" />
             <div className="cta-card-wrap">
               <div className="horizontal-text-wrap">
                 <h2 className="section-heading section-heading--on-dark">
