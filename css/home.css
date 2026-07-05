@@ -565,7 +565,18 @@ h1, h2, p { margin: 0; }
    asset is uploaded (an <img> with no intrinsic size + failed load = 0px). */
 .system-funnel { min-height: 240px; }
 .funnel-img-wrap { display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; }
-.funnel-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+/* Sized to the Figma target (255.57 x 349) — max-width/height:100% stay as a
+   safety net so it never overflows funnel-img-wrap on an unexpectedly small box. */
+.funnel-img { width: 256px; height: 349px; max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* System-card icons — each sized to its individual Figma target (all sit in
+   the shared .card-icon-wrap 100px-tall box, same convention as the problem
+   cards). Values below are the exact desktop node dimensions from Figma. */
+.system-icon--euro        { width: 112px; height: 46px; }
+.system-icon--lighthouse  { width: 85px;  height: 88px; }
+.system-icon--running     { width: 84px;  height: 84px; }
+.system-icon--wordofmouth { width: 127px; height: 84px; }
+.system-icon--leadmgmt    { width: 102px; height: 84px; }
 
 .system-card-stack-col {
   grid-column: 9 / span 4;
@@ -636,6 +647,16 @@ h1, h2, p { margin: 0; }
   .problem-card--2 .card-icon { width: clamp(38px, 12.8vw, 103px); }
   .problem-card--3 .card-icon { width: clamp(28px, 9.7vw, 73px); }
   .problem-card--4 .card-icon { width: clamp(27px, 9.0vw, 87px); }
+
+  /* System-overview icons: same fluid-vw treatment, sized off the 390px
+     mobile Figma frame (127-192) per-icon pixel values. height:auto so the
+     desktop fixed height doesn't fight the aspect ratio as width scales. */
+  .system-icon--euro        { width: clamp(65px, 22.3vw, 112px); height: auto; }
+  .system-icon--lighthouse  { width: clamp(30px, 10.9vw, 85px);  height: auto; }
+  .system-icon--running     { width: clamp(32px, 11.3vw, 84px);  height: auto; }
+  .system-icon--wordofmouth { width: clamp(48px, 17.0vw, 127px); height: auto; }
+  .system-icon--leadmgmt    { width: clamp(38px, 13.8vw, 102px); height: auto; }
+  .funnel-img { width: clamp(150px, 50.1vw, 256px); height: auto; }
 
   /* ── Audit section: single bento, flex column ─────────────────────────── */
   .audit-grid {
