@@ -12,9 +12,6 @@
 
   <link rel="stylesheet" href="design-system/tokens.css" />
   <link rel="stylesheet" href="css/home.css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
   <main class="page">
@@ -316,14 +313,13 @@
          SYSTEM OVERVIEW SECTION  (sticky intro + stacking cards)
     ========================================================== -->
     <section class="universal-section system-overview-section" id="system">
-      <div class="main-grid main-grid--unlocked system-overview-grid">
+      <div class="system-overview-grid">
 
-        <!-- Group only matters on mobile (display:contents on desktop) — see
-             css/home.css: on mobile these stack vertically and must pin as ONE
-             unit, not independently (two independently-sticky same-offset
-             siblings would overlap once both stuck). -->
-        <div class="system-intro-group">
-          <div class="bento hug-bento fill-bento--green system-intro">
+        <!-- Left sticky column: intro bento + funnel image side by side (desktop)
+             or stacked (mobile). BOTH share the same sticky container so they
+             pin together AND stretch to equal height via inner grid. -->
+        <div class="system-sticky-col">
+          <div class="bento fill-bento--green system-intro">
             <div class="hug-bento-content-wrap">
               <div class="content-layout-wrap">
                 <div class="text-wrap">
@@ -343,88 +339,89 @@
           </div>
 
           <div class="bento fill-bento system-funnel">
-            <div class="fill-bento-wrap-small">
-              <div class="funnel-img-wrap">
-                <img class="funnel-img" src="assets/images/Funnel Image.png" alt="Funnel: high-intent searchers narrowing down to qualified leads" onerror="this.style.display='none'" />
-              </div>
+            <div class="funnel-img-wrap">
+              <img class="funnel-img" src="assets/images/Funnel Image.png" alt="Funnel: high-intent searchers narrowing down to qualified leads" onerror="this.style.display='none'" />
             </div>
           </div>
         </div>
 
-        <div class="system-card-stack-col">
-          <div class="system-card-stack">
+        <!-- Right column: 5 sticky cards. Each card sticks at a progressively
+             lower `top` offset (see CSS custom properties set by JS) so that
+             as user scrolls, later cards visually overlay earlier ones,
+             leaving only a peek visible above the current card. Native CSS
+             sticky — no scroll-triggered JS animation, so this is rock solid. -->
+        <div class="system-card-col">
 
-            <div class="bento fill-bento system-card system-card--fill" data-card-index="0">
-              <div class="fill-bento-wrap-small">
-                <div class="stacked-card-wrap">
-                  <div class="card-icon-wrap">
-                    <img class="card-icon system-icon--euro" src="assets/images/€€€.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
-                  </div>
-                  <div class="text-wrap">
-                    <p class="card-heading">A Nice Looking Website</p>
-                    <p class="paragraph">On the surface, this is what everyone sees, it's what business owners look for.<br />But they often ignore the purpose of a website, and the background mechanisms.</p>
-                  </div>
+          <div class="bento fill-bento system-card" style="--card-i: 0;">
+            <div class="fill-bento-wrap-small">
+              <div class="stacked-card-wrap">
+                <div class="card-icon-wrap">
+                  <img class="card-icon system-icon--euro" src="assets/images/€€€.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+                </div>
+                <div class="text-wrap">
+                  <p class="card-heading">A Nice Looking Website</p>
+                  <p class="paragraph">On the surface, this is what everyone sees, it's what business owners look for.<br />But they often ignore the purpose of a website, and the background mechanisms.</p>
                 </div>
               </div>
             </div>
-
-            <div class="bento fill-bento system-card system-card--fit" data-card-index="1">
-              <div class="fill-bento-wrap-small">
-                <div class="stacked-card-wrap">
-                  <div class="card-icon-wrap">
-                    <img class="card-icon system-icon--lighthouse" src="assets/images/Lighthouse image.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
-                  </div>
-                  <div class="text-wrap">
-                    <p class="card-heading">1: They're Already Looking For You</p>
-                    <p class="paragraph">Your site brings in the searches that matter — people who need your trade, right now, and are deciding who to call. Google and AI both.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bento fill-bento system-card system-card--fit" data-card-index="2">
-              <div class="fill-bento-wrap-small">
-                <div class="stacked-card-wrap">
-                  <div class="card-icon-wrap">
-                    <img class="card-icon system-icon--running" src="assets/images/man running.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
-                  </div>
-                  <div class="text-wrap">
-                    <p class="card-heading">2: Built To Get Them Over The Line</p>
-                    <p class="paragraph">We make sure your site says exactly the right thing to the right visitor — removing every reason they'd have to hesitate reaching out.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bento fill-bento system-card system-card--fit" data-card-index="3">
-              <div class="fill-bento-wrap-small">
-                <div class="stacked-card-wrap">
-                  <div class="card-icon-wrap">
-                    <img class="card-icon system-icon--wordofmouth" src="assets/images/word of mouth leads.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
-                  </div>
-                  <div class="text-wrap">
-                    <p class="card-heading">Word Of Mouth Visitors</p>
-                    <p class="paragraph">Word of mouth gets you in the door — the site does the rest. They arrive already half-sold, and leave with no reason not to call.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bento fill-bento system-card system-card--hug" data-card-index="4">
-              <div class="fill-bento-wrap-small">
-                <div class="stacked-card-wrap">
-                  <div class="card-icon-wrap">
-                    <img class="card-icon system-icon--leadmgmt" src="assets/images/lead management icon.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
-                  </div>
-                  <div class="text-wrap">
-                    <p class="card-heading">Every Enquiry Sorted &amp; Managed</p>
-                    <p class="paragraph">Leads come in through different channels and fall through the cracks. The system captures every one, follows up consistently, and makes sure nothing goes cold before you've had a chance to quote.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
+
+          <div class="bento fill-bento system-card" style="--card-i: 1;">
+            <div class="fill-bento-wrap-small">
+              <div class="stacked-card-wrap">
+                <div class="card-icon-wrap">
+                  <img class="card-icon system-icon--lighthouse" src="assets/images/Lighthouse image.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+                </div>
+                <div class="text-wrap">
+                  <p class="card-heading">1: They're Already Looking For You</p>
+                  <p class="paragraph">Your site brings in the searches that matter — people who need your trade, right now, and are deciding who to call. Google and AI both.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bento fill-bento system-card" style="--card-i: 2;">
+            <div class="fill-bento-wrap-small">
+              <div class="stacked-card-wrap">
+                <div class="card-icon-wrap">
+                  <img class="card-icon system-icon--running" src="assets/images/man running.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+                </div>
+                <div class="text-wrap">
+                  <p class="card-heading">2: Built To Get Them Over The Line</p>
+                  <p class="paragraph">We make sure your site says exactly the right thing to the right visitor — removing every reason they'd have to hesitate reaching out.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bento fill-bento system-card" style="--card-i: 3;">
+            <div class="fill-bento-wrap-small">
+              <div class="stacked-card-wrap">
+                <div class="card-icon-wrap">
+                  <img class="card-icon system-icon--wordofmouth" src="assets/images/word of mouth leads.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+                </div>
+                <div class="text-wrap">
+                  <p class="card-heading">Word Of Mouth Visitors</p>
+                  <p class="paragraph">Word of mouth gets you in the door — the site does the rest. They arrive already half-sold, and leave with no reason not to call.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bento fill-bento system-card system-card--hug" style="--card-i: 4;">
+            <div class="fill-bento-wrap-small">
+              <div class="stacked-card-wrap">
+                <div class="card-icon-wrap">
+                  <img class="card-icon system-icon--leadmgmt" src="assets/images/lead management icon.png" alt="" aria-hidden="true" onerror="this.style.display='none'" />
+                </div>
+                <div class="text-wrap">
+                  <p class="card-heading">Every Enquiry Sorted &amp; Managed</p>
+                  <p class="paragraph">Leads come in through different channels and fall through the cracks. The system captures every one, follows up consistently, and makes sure nothing goes cold before you've had a chance to quote.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -473,123 +470,86 @@
   </script>
 
   <!-- =========================================================
-       SYSTEM OVERVIEW — scroll-driven stacking cards
-       GSAP ScrollTrigger only supplies scroll progress (0..1); the actual
-       pin is plain CSS `position: sticky` on .system-intro / .system-funnel
-       / .system-card-stack-col (see css/home.css), each with its own
-       independent sticky offset. Card heights and the peek-offset are
-       measured live (no hardcoded pixel values) so this stays correct if
-       copy length or breakpoint changes.
+       SYSTEM OVERVIEW — sticky peek-stack
+       The stacking mechanic is 100% native CSS `position: sticky` on each card
+       with progressively-lower `top` values. Later cards visually overlay
+       earlier ones as scroll advances, leaving a "peek" of each earlier card
+       visible above the current one. No scroll-driven JS animation — this
+       cannot fail because there's no CDN to reach, no scrubbed transforms,
+       and no polling loop. The browser paints it natively.
+
+       This JS ONLY does measurement:
+         1. Height of the tallest (`.system-card--hug`) card,
+         2. Height of the left sticky column,
+       and writes them + a computed peek-offset back as CSS custom properties
+       for the stylesheet to consume. On resize, remeasure.
   ========================================================== -->
   <script>
   (function () {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-
     var section = document.querySelector('.system-overview-section');
     if (!section) return;
-
-    var introEl  = section.querySelector('.system-intro');
-    var funnelEl = section.querySelector('.system-funnel');
-    var stackCol = section.querySelector('.system-card-stack-col');
-    var stackEl  = section.querySelector('.system-card-stack');
-    var cards    = Array.prototype.slice.call(section.querySelectorAll('.system-card'));
-    var hugCard  = section.querySelector('.system-card--hug');
-    if (!introEl || !funnelEl || !stackEl || !cards.length || !hugCard) return;
+    var stickyCol = section.querySelector('.system-sticky-col');
+    var cards     = Array.prototype.slice.call(section.querySelectorAll('.system-card'));
+    var hugCard   = section.querySelector('.system-card--hug');
+    if (!stickyCol || !cards.length || !hugCard) return;
 
     function isMobile() { return window.matchMedia('(max-width: 991px)').matches; }
-    function gridGapPx() {
-      var v = getComputedStyle(document.documentElement).getPropertyValue('--grid-gap');
-      return parseFloat(v) || 8;
-    }
 
-    var layout = { peekOffset: 0, hugHeight: 0, leftColHeight: 0 };
-    var st = null;
+    function measure() {
+      // Reset any JS-imposed sizes so we read the natural content height.
+      // MUST use inline !important to defeat the CSS `height: var(--card-h)`
+      // rule and its fallback value — otherwise every remeasure re-reads the
+      // previously-forced height and can't discover the true content size.
+      cards.forEach(function (c) { c.style.setProperty('height', 'auto', 'important'); });
+      section.style.removeProperty('--card-h');
+      section.style.removeProperty('--left-h-min');
 
-    function measureAndLayout() {
-      // Reset any JS-imposed heights before measuring natural content height —
-      // otherwise a stale height from a previous breakpoint pollutes the read.
-      cards.forEach(function (c) { c.style.height = 'auto'; });
-
-      // "hug" card = most content-heavy; every other card (fill/fit) matches it.
-      var hugHeight = hugCard.getBoundingClientRect().height;
-      cards.forEach(function (c) { c.style.height = hugHeight + 'px'; });
-
-      var gap = gridGapPx();
-      var leftColHeight = introEl.getBoundingClientRect().height + gap + funnelEl.getBoundingClientRect().height;
+      // Force all cards to match the hug (tallest) card's rendered height.
+      var hugH = Math.ceil(hugCard.getBoundingClientRect().height);
+      cards.forEach(function (c) { c.style.removeProperty('height'); });
+      section.style.setProperty('--card-h', hugH + 'px');
 
       var n = cards.length;
-      var peekOffset;
+
       if (isMobile()) {
-        // Mobile stacks intro/funnel/cards vertically (no "left column" to
-        // match — that request was about the desktop side-by-side layout).
-        // Use a fixed, legible peek instead of solving for an exact match,
-        // which on mobile's narrower proportions comes out only a few px.
-        peekOffset = 32;
-        stackEl.style.height = (hugHeight + (n - 1) * peekOffset) + 'px';
-      } else {
-        // Desktop: solve so the fully-stacked pile's total height exactly
-        // equals the pinned left column's height: hugHeight + (n-1)*peekOffset
-        // == leftColHeight.
-        peekOffset = n > 1 ? (leftColHeight - hugHeight) / (n - 1) : 0;
-        peekOffset = Math.max(0, peekOffset);
-        stackEl.style.height = leftColHeight + 'px';
+        // Mobile: intro + funnel scroll normally (not sticky). Cards do the
+        // peek-stack with a fixed peek — no need to match left-column height
+        // since they're stacked vertically anyway.
+        var peekMobile = 40;
+        section.style.setProperty('--peek', peekMobile + 'px');
+        section.style.setProperty('--left-h', (hugH + (n - 1) * peekMobile) + 'px');
+        return;
       }
 
-      cards.forEach(function (card, i) {
-        card.style.zIndex = String(i + 1);
-        var restY = i * peekOffset;
-        var startY = restY + hugHeight + gap; // one card-height below its resting spot
-        gsap.set(card, { y: i === 0 ? restY : startY });
-        card.dataset.restY = restY;
-        card.dataset.startY = startY;
-      });
+      // Desktop: natural left-column height (intro + funnel side-by-side
+      // stretch to whichever is taller, via inner grid align-items:stretch).
+      var leftNatural = Math.ceil(stickyCol.getBoundingClientRect().height);
 
-      return { peekOffset: peekOffset, hugHeight: hugHeight, leftColHeight: leftColHeight };
+      // Minimum visible peek — enough to reveal card content, not just padding.
+      var minPeek = 60;
+
+      // For the fully-stacked pile to visually match the left column height
+      // (the design brief), we need: hugH + (n-1)*peek == leftH.
+      // If natural leftH is too short for the required peek, EXPAND the left
+      // column min-height so it stretches to accommodate. This is what makes
+      // the "fully-stacked == left column" invariant hold.
+      var requiredLeftH = hugH + (n - 1) * minPeek;
+      var leftH = Math.max(leftNatural, requiredLeftH);
+      section.style.setProperty('--left-h-min', leftH + 'px');
+
+      var peek = n > 1 ? (leftH - hugH) / (n - 1) : 0;
+      section.style.setProperty('--peek', peek + 'px');
+      section.style.setProperty('--left-h', leftH + 'px');
     }
 
-    function buildScrollTrigger() {
-      if (st) { st.kill(); st = null; }
-      var distancePerCard = layout.hugHeight * 0.9;
-      var totalDistance = (cards.length - 1) * distancePerCard;
+    // Initial measurement + on-load fallback (funnel PNG affects heights).
+    measure();
+    window.addEventListener('load', measure);
 
-      // Extra scroll runway so the sticky elements have room to travel
-      // through before releasing back into normal flow.
-      section.style.minHeight = (window.innerHeight + totalDistance) + 'px';
-
-      st = ScrollTrigger.create({
-        trigger: section,
-        start: function () { return isMobile() ? 'top center' : 'top top'; },
-        end: '+=' + totalDistance,
-        scrub: 1,
-        onUpdate: function (self) {
-          var progress = self.progress;
-          var steps = cards.length - 1;
-          cards.forEach(function (card, i) {
-            if (i === 0) return; // first card is always at rest
-            var stepStart = (i - 1) / steps;
-            var stepEnd = i / steps;
-            var localT = (progress - stepStart) / (stepEnd - stepStart);
-            localT = Math.min(1, Math.max(0, localT));
-            var restY = parseFloat(card.dataset.restY);
-            var startY = parseFloat(card.dataset.startY);
-            gsap.set(card, { y: startY + (restY - startY) * localT });
-          });
-        }
-      });
-    }
-
-    layout = measureAndLayout();
-    buildScrollTrigger();
-
-    var resizeTimer;
+    var t = null;
     window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        layout = measureAndLayout();
-        buildScrollTrigger();
-        ScrollTrigger.refresh();
-      }, 200);
+      clearTimeout(t);
+      t = setTimeout(measure, 150);
     });
   }());
   </script>

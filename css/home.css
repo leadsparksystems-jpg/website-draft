@@ -534,69 +534,119 @@ h1, h2, p { margin: 0; }
 .flip-card--cream .flip-card__reprompt { color: var(--color-ink); }
 
 /* -----------------------------------------------------------------------------
-   SYSTEM OVERVIEW SECTION  (sticky intro/funnel + scroll-driven stacking cards)
-   Card transforms + the ScrollTrigger scroll-distance are driven by JS
-   (bottom of index.html) — CSS only owns the sticky positioning and the
-   static "resting" look of each card. See inline comments there for the
-   peek-offset / hug-height calculations.
+   SYSTEM OVERVIEW SECTION
+   Peek-stack via native CSS `position: sticky` with progressive `top` values.
+   No scroll-driven JS, no CDN — this cannot break. See index.html <script>
+   for the height/peek measurement that feeds the CSS custom properties below.
+
+   Custom properties set by JS:
+     --card-h  = height of tallest ("hug") card (all cards match it)
+     --left-h  = height of the left sticky column
+     --peek    = vertical offset between consecutive sticky tops (peek amount)
 ----------------------------------------------------------------------------- */
-.system-overview-grid { grid-template-rows: auto; position: relative; }
+.system-overview-section { padding-block: 56px; }
 
-/* Desktop: transparent to grid layout — .system-intro / .system-funnel become
-   direct grid items, placed side by side as their own independently-sticky
-   columns. Mobile overrides this to a real block (see responsive section). */
-.system-intro-group { display: contents; }
-
-.system-intro  { grid-column: 1 / span 5; }
-.system-funnel { grid-column: 6 / span 3; }
-
-/* Intro + funnel pin independently of the card stack, offset further up the
-   viewport so they sit partially above the fold once stuck (per design note:
-   "half out of the viewport") — tuned via this custom property so it's easy
-   to retune without hunting through the rule. */
-.system-intro,
-.system-funnel {
-  position: sticky;
-  top: var(--system-intro-sticky-top, -18vh);
-  align-self: start;
+.system-overview-grid {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  gap: var(--grid-gap);
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding-inline: 32px;
 }
 
-/* Safety-net height so this bento doesn't collapse to 0 before the funnel
-   asset is uploaded (an <img> with no intrinsic size + failed load = 0px). */
-.system-funnel { min-height: 240px; }
-.funnel-img-wrap { display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; }
-/* Sized to the Figma target (255.57 x 349) — max-width/height:100% stay as a
-   safety net so it never overflows funnel-img-wrap on an unexpectedly small box. */
-.funnel-img { width: 256px; height: 349px; max-width: 100%; max-height: 100%; object-fit: contain; }
+/* Left sticky column: intro + funnel side by side, EQUAL HEIGHT (via inner
+   grid + align-items: stretch). Whole column pins as one unit at
+   viewport-center-minus-half-height (--sticky-top-y set below), so the group
+   sits centered when stuck — matching the "start in middle of viewport" brief. */
+.system-sticky-col {
+  position: sticky;
+  align-self: start;
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  gap: var(--grid-gap);
+  align-items: stretch;
+  /* Stretched by JS to be tall enough that (fully-stacked cards) == this height,
+     leaving a visible peek per card. Without this the intro's natural height
+     is often shorter than the hug card, making peek negative. */
+  min-height: var(--left-h-min, 400px);
+}
+
+.system-intro,
+.system-funnel {
+  border-radius: var(--bento-radius);
+  overflow: hidden;
+  min-height: 240px;
+}
+.system-intro .hug-bento-content-wrap {
+  padding: var(--hero-wrap-pad-y) var(--hero-wrap-pad-x);
+  height: 100%;
+  align-items: stretch;
+}
+/* Distribute the intro content vertically: heading at top, CTA pushed to
+   bottom. This lets the tall left-column box (stretched to match the fully-
+   stacked cards height) feel intentional instead of empty. */
+.system-intro .content-layout-wrap {
+  flex: 1;
+  justify-content: space-between;
+  gap: var(--hero-wrap-gap);
+}
+.system-funnel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--fill-wrap-pad-y) var(--fill-wrap-pad-x);
+}
+.funnel-img-wrap {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+}
+.funnel-img { width: 256px; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
 
 /* System-card icons — each sized to its individual Figma target (all sit in
-   the shared .card-icon-wrap 100px-tall box, same convention as the problem
-   cards). Values below are the exact desktop node dimensions from Figma. */
+   the shared .card-icon-wrap 100px-tall box). */
 .system-icon--euro        { width: 112px; height: 46px; }
 .system-icon--lighthouse  { width: 85px;  height: 88px; }
 .system-icon--running     { width: 84px;  height: 84px; }
 .system-icon--wordofmouth { width: 127px; height: 84px; }
 .system-icon--leadmgmt    { width: 102px; height: 84px; }
 
-.system-card-stack-col {
-  grid-column: 9 / span 4;
-  position: sticky;
-  top: var(--system-stack-sticky-top, 24px);
-  align-self: start;
+/* Right column: cards in normal flex flow, each with `position: sticky` at a
+   progressively-lower `top` value. As the page scrolls:
+     1. Card i's TOP scrolls up until it hits its sticky-top, then it locks.
+     2. Card i+1 continues scrolling normally, sliding OVER the locked card i
+        (later DOM order = painted on top by default — no z-index gymnastics).
+     3. When card i+1 hits ITS sticky-top (peek px lower than card i's), it
+        locks too — leaving exactly `--peek` of card i visible above it.
+   Result: perfect peek-stack, purely browser-native, no scroll listeners. */
+.system-card-col {
+  display: block;
+  /* Scroll runway: extra space after the last card so the fully-stacked view
+     (all 5 cards at their sticky positions) holds for a full viewport of
+     scroll before the last card starts sliding out. Without this, the card
+     column ends the moment the last card sticks, and cards immediately begin
+     un-sticking (moving up with the container's bottom edge). */
+  padding-bottom: 60vh;
 }
-
-/* Height is set by JS to exactly match the intro+funnel column height, so the
-   fully-stacked pile lines up with the sticky content beside it. */
-.system-card-stack { position: relative; width: 100%; }
+.system-card + .system-card { margin-top: var(--grid-gap); }
 
 .system-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  will-change: transform;
+  position: sticky;
+  height: var(--card-h, 330px);
+  /* Card sticky-top uses the FULLY-STACKED pile height (== --left-h) so that
+     card 0's top aligns with the sticky left column's top. Card i sticks
+     `--peek` px below card i-1, so when fully stacked, the pile spans exactly
+     the same vertical range as the sticky column beside it. */
+  top: calc(50vh - var(--left-h, 400px) / 2 + var(--card-i, 0) * var(--peek, 60px));
 }
 .system-card .fill-bento-wrap-small { height: 100%; }
+
+/* Sticky left column: centered vertically at viewport center (top = 50vh -
+   half-height). Same reference as the cards' sticky-top formula so they
+   align pixel-for-pixel when fully stacked. */
+.system-sticky-col {
+  top: calc(50vh - var(--left-h, 400px) / 2);
+}
 
 /* =============================================================================
    RESPONSIVE  (Webflow breakpoints: iPad ≤991px, Phone ≤767px)
@@ -688,27 +738,33 @@ h1, h2, p { margin: 0; }
     padding: 0;
   }
 
-  /* ── System overview: single flex column, but keeps the SAME pin+stack
-     mechanic as desktop (per design note: cards stack on mobile too, trigger
-     starts once the section reaches viewport-center — see the JS gate). ──── */
+  /* ── System overview (mobile) — everything scrolls in normal flow. Peek-
+     stacking works great on desktop where there's enough viewport height to
+     fit 5 cards stacked with visible peeks; on mobile the same math forces
+     into <1 viewport of vertical space, and Chromium's implementation of
+     sticky-with-container-runway collapses all cards to the same y once you
+     scroll past the container. Simpler to just present cards normally. ──── */
   .system-overview-grid {
     display: flex;
     flex-direction: column;
     gap: var(--grid-gap);
-    padding: var(--grid-pad-y) var(--grid-pad-x);
+    padding-inline: var(--grid-pad-x);
   }
-  /* Intro + funnel stack vertically (normal block flow) and pin as ONE unit
-     via the group wrapper — each was independently sticky at the same offset
-     on desktop (fine side-by-side), which would make them overlap if both
-     stayed sticky while stacked vertically here. */
-  .system-intro-group {
-    display: block;
-    position: sticky;
-    top: var(--system-intro-sticky-top-mobile, -8vh);
+  .system-sticky-col {
+    position: static;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    min-height: 0;
+    width: 100%;
   }
   .system-intro,
-  .system-funnel { position: static; width: 100%; margin-bottom: var(--grid-gap); }
-  .system-card-stack-col { width: 100%; }
+  .system-funnel { min-height: 240px; }
+  .system-card-col { width: 100%; }
+  .system-card {
+    position: static;
+    height: auto !important;      /* release JS-forced hug-card height */
+  }
+  .funnel-img { width: clamp(150px, 50vw, 256px); }
 }
 
 /* =============================================================================
