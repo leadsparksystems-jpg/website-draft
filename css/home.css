@@ -533,6 +533,60 @@ h1, h2, p { margin: 0; }
 }
 .flip-card--cream .flip-card__reprompt { color: var(--color-ink); }
 
+/* -----------------------------------------------------------------------------
+   SYSTEM OVERVIEW SECTION  (sticky intro/funnel + scroll-driven stacking cards)
+   Card transforms + the ScrollTrigger scroll-distance are driven by JS
+   (bottom of index.html) — CSS only owns the sticky positioning and the
+   static "resting" look of each card. See inline comments there for the
+   peek-offset / hug-height calculations.
+----------------------------------------------------------------------------- */
+.system-overview-grid { grid-template-rows: auto; position: relative; }
+
+/* Desktop: transparent to grid layout — .system-intro / .system-funnel become
+   direct grid items, placed side by side as their own independently-sticky
+   columns. Mobile overrides this to a real block (see responsive section). */
+.system-intro-group { display: contents; }
+
+.system-intro  { grid-column: 1 / span 5; }
+.system-funnel { grid-column: 6 / span 3; }
+
+/* Intro + funnel pin independently of the card stack, offset further up the
+   viewport so they sit partially above the fold once stuck (per design note:
+   "half out of the viewport") — tuned via this custom property so it's easy
+   to retune without hunting through the rule. */
+.system-intro,
+.system-funnel {
+  position: sticky;
+  top: var(--system-intro-sticky-top, -18vh);
+  align-self: start;
+}
+
+/* Safety-net height so this bento doesn't collapse to 0 before the funnel
+   asset is uploaded (an <img> with no intrinsic size + failed load = 0px). */
+.system-funnel { min-height: 240px; }
+.funnel-img-wrap { display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; }
+.funnel-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.system-card-stack-col {
+  grid-column: 9 / span 4;
+  position: sticky;
+  top: var(--system-stack-sticky-top, 24px);
+  align-self: start;
+}
+
+/* Height is set by JS to exactly match the intro+funnel column height, so the
+   fully-stacked pile lines up with the sticky content beside it. */
+.system-card-stack { position: relative; width: 100%; }
+
+.system-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: transform;
+}
+.system-card .fill-bento-wrap-small { height: 100%; }
+
 /* =============================================================================
    RESPONSIVE  (Webflow breakpoints: iPad ≤991px, Phone ≤767px)
    Desktop layout is pixel-referenced to Figma; below it we reflow to stay
@@ -612,6 +666,28 @@ h1, h2, p { margin: 0; }
     width: 100%;
     padding: 0;
   }
+
+  /* ── System overview: single flex column, but keeps the SAME pin+stack
+     mechanic as desktop (per design note: cards stack on mobile too, trigger
+     starts once the section reaches viewport-center — see the JS gate). ──── */
+  .system-overview-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+    padding: var(--grid-pad-y) var(--grid-pad-x);
+  }
+  /* Intro + funnel stack vertically (normal block flow) and pin as ONE unit
+     via the group wrapper — each was independently sticky at the same offset
+     on desktop (fine side-by-side), which would make them overlap if both
+     stayed sticky while stacked vertically here. */
+  .system-intro-group {
+    display: block;
+    position: sticky;
+    top: var(--system-intro-sticky-top-mobile, -8vh);
+  }
+  .system-intro,
+  .system-funnel { position: static; width: 100%; margin-bottom: var(--grid-gap); }
+  .system-card-stack-col { width: 100%; }
 }
 
 /* =============================================================================
