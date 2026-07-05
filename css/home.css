@@ -548,27 +548,23 @@ h1, h2, p { margin: 0; }
 
 .system-overview-grid {
   display: grid;
-  grid-template-columns: 8fr 4fr;
+  grid-template-columns: 5fr 7fr;
   gap: var(--grid-gap);
   max-width: var(--content-max-width);
   margin-inline: auto;
   padding-inline: 32px;
 }
 
-/* Left sticky column: intro + funnel side by side, EQUAL HEIGHT (via inner
-   grid + align-items: stretch). Whole column pins as one unit at
-   viewport-center-minus-half-height (--sticky-top-y set below), so the group
-   sits centered when stuck — matching the "start in middle of viewport" brief. */
+/* Left sticky column: intro bento stacked above funnel image bento, each
+   filling the full column width. Whole column pins as one unit centered in
+   the viewport. Equal heights achieved by flex: 1 on both bentos with a
+   known column height (set by JS via --left-h-min). */
 .system-sticky-col {
   position: sticky;
   align-self: start;
-  display: grid;
-  grid-template-columns: 5fr 3fr;
+  display: flex;
+  flex-direction: column;
   gap: var(--grid-gap);
-  align-items: stretch;
-  /* Stretched by JS to be tall enough that (fully-stacked cards) == this height,
-     leaving a visible peek per card. Without this the intro's natural height
-     is often shorter than the hug card, making peek negative. */
   min-height: var(--left-h-min, 400px);
 }
 
@@ -576,7 +572,8 @@ h1, h2, p { margin: 0; }
 .system-funnel {
   border-radius: var(--bento-radius);
   overflow: hidden;
-  min-height: 240px;
+  flex: 1;
+  min-height: 180px;
 }
 .system-intro .hug-bento-content-wrap {
   padding: var(--hero-wrap-pad-y) var(--hero-wrap-pad-x);
@@ -637,7 +634,8 @@ h1, h2, p { margin: 0; }
      card 0's top aligns with the sticky left column's top. Card i sticks
      `--peek` px below card i-1, so when fully stacked, the pile spans exactly
      the same vertical range as the sticky column beside it. */
-  top: calc(50vh - var(--left-h, 400px) / 2 + var(--card-i, 0) * var(--peek, 60px));
+  top: calc(50vh - var(--left-h, 400px) / 2 + var(--card-i, 0) * var(--peek, 80px));
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 .system-card .fill-bento-wrap-small { height: 100%; }
 
@@ -752,13 +750,11 @@ h1, h2, p { margin: 0; }
   }
   .system-sticky-col {
     position: static;
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
     min-height: 0;
     width: 100%;
   }
   .system-intro,
-  .system-funnel { min-height: 240px; }
+  .system-funnel { min-height: 220px; flex: none; }
   .system-card-col { width: 100%; }
   .system-card {
     position: static;

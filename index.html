@@ -515,7 +515,7 @@
         // Mobile: intro + funnel scroll normally (not sticky). Cards do the
         // peek-stack with a fixed peek — no need to match left-column height
         // since they're stacked vertically anyway.
-        var peekMobile = 40;
+        var peekMobile = 56;
         section.style.setProperty('--peek', peekMobile + 'px');
         section.style.setProperty('--left-h', (hugH + (n - 1) * peekMobile) + 'px');
         return;
@@ -525,8 +525,8 @@
       // stretch to whichever is taller, via inner grid align-items:stretch).
       var leftNatural = Math.ceil(stickyCol.getBoundingClientRect().height);
 
-      // Minimum visible peek — enough to reveal card content, not just padding.
-      var minPeek = 60;
+      // Minimum visible peek — enough to reveal card heading + icon.
+      var minPeek = 80;
 
       // For the fully-stacked pile to visually match the left column height
       // (the design brief), we need: hugH + (n-1)*peek == leftH.
